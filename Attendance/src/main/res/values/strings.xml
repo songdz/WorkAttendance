@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">WorkAttendance</string>
+    <string name="more_info">更多详情</string>
+    <string name="hello_world">Hello World!</string>
+    <string name="action_settings">Settings</string>
+    <string name="last_record_time">上次打卡时间: </string>
+    <string name="attendance">&#160;打&#160;&#160;&#160;&#160;卡&#160;</string>
+
+</resources>
