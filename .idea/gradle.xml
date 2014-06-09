@@ -9,6 +9,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/Attendance" />
+            <option value="$PROJECT_DIR$/FieldDataCheck" />
           </set>
         </option>
       </GradleProjectSettings>

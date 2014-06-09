@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Attendance/Attendance.iml" filepath="$PROJECT_DIR$/Attendance/Attendance.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FieldDataCheck/FieldDataCheck.iml" filepath="$PROJECT_DIR$/FieldDataCheck/FieldDataCheck.iml" />
       <module fileurl="file://$PROJECT_DIR$/WorkAttendance.iml" filepath="$PROJECT_DIR$/WorkAttendance.iml" />
     </modules>
   </component>
