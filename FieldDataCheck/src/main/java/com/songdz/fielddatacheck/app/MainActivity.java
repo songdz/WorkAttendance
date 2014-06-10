@@ -2,6 +2,7 @@ package com.songdz.fielddatacheck.app;
 
 import android.app.Activity;
 import android.content.Entity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -45,38 +46,11 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 Thread networkRequest = new Thread(new NetworkRequest());
                 networkRequest.start();
+                /*Intent intent = new Intent();
+                intent.setClass(MainActivity.this, ShowResultList.class);
+                startActivity(intent);*/
             }
         });
-
-        /*btn_send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String httpUrl = "http://localhost:8080/FieldDataCheck/CheckData";
-                HttpPost request = new HttpPost(httpUrl);
-                List<NameValuePair> paramList = new ArrayList<NameValuePair>();
-                paramList.add(new BasicNameValuePair("request", "1"));
-                paramList.add(new BasicNameValuePair("username", "songdz"));
-                paramList.add(new BasicNameValuePair("password", "songdz"));
-                paramList.add(new BasicNameValuePair("querySql", "SELECT 项目内节点编号,MAX(紧缩型时间传感器_实时时间) FROM 水文监测仪lzipv6 GROUP BY 项目内节点编号"));
-                try {
-                    UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(paramList, "UTF-8");
-                    request.setEntity(formEntity);
-                    HttpClient httpClient = new DefaultHttpClient();
-                    HttpResponse response = httpClient.execute(request);
-                    if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-                        String result = EntityUtils.toString(response.getEntity());
-                        tv_show_result.setText(result);
-                    }
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                } catch (ClientProtocolException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        });*/
     }
     android.os.Handler handler = new android.os.Handler();
     class NetworkRequest implements Runnable {
@@ -111,6 +85,15 @@ public class MainActivity extends Activity {
                 @Override
                 public void run() {
                     tv_show_result.setText(result);
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Intent intent = new Intent();
+                            intent.setClass(MainActivity.this, ShowResultList.class);
+                            intent.putExtra("result", result);
+                            startActivity(intent);
+                        }
+                    }, 3000);
                 }
             });
         }
