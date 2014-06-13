@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.songdz.util.SimpleHttpRequest;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
@@ -31,9 +33,9 @@ import java.util.logging.Handler;
 
 public class MainActivity extends Activity {
 
-    Button btn_send;
-    TextView tv_show_result;
-    String httpUrl = "http://159.226.15.192:8080/FieldDataCheck/CheckData";
+    private Button btn_send;
+    private TextView tv_show_result;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,32 +56,24 @@ public class MainActivity extends Activity {
     }
     android.os.Handler handler = new android.os.Handler();
     class NetworkRequest implements Runnable {
-        String result = "Wrong Request";
+        String result = ResponseCode.WRONG_REQUEST;
         @Override
         public void run() {
-            HttpPost request = new HttpPost(httpUrl);
             List<NameValuePair> paramList = new ArrayList<NameValuePair>();
-            paramList.add(new BasicNameValuePair("request", "1"));
-            paramList.add(new BasicNameValuePair("username", "songdz"));
-            paramList.add(new BasicNameValuePair("password", "songdz"));
-            paramList.add(new BasicNameValuePair("querySql", "SELECT 项目内节点编号,MAX(紧缩型时间传感器_实时时间) FROM 水文监测仪lzipv6 GROUP BY 项目内节点编号"));
-            try {
-                UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(paramList, "UTF-8");
-                request.setEntity(formEntity);
-                HttpClient httpClient = new DefaultHttpClient();
-                httpClient.getParams().setIntParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 1000);
-                HttpResponse response = httpClient.execute(request);
-                if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+            paramList.add(new BasicNameValuePair(Constants.request, RequestCode.CHECK_DATA));
+            paramList.add(new BasicNameValuePair(Constants.username, "songdz"));
+            paramList.add(new BasicNameValuePair(Constants.password, "songdz"));
+            paramList.add(new BasicNameValuePair(Constants.querySql, RequestCode.querySql_checkData));
+            HttpResponse response = SimpleHttpRequest.httpPostRequest(RequestCode.httpUrl_checkData, paramList);
+            if ((response != null) && (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK)) {
+                try {
                     result = EntityUtils.toString(response.getEntity());
-                } else {
-                    result = "Wrong Request";
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    result = ResponseCode.WRONG_REQUEST;
                 }
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            } catch (ClientProtocolException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+            } else {
+                result = ResponseCode.WRONG_REQUEST;
             }
             handler.post(new Runnable() {
                 @Override
@@ -90,7 +84,7 @@ public class MainActivity extends Activity {
                         public void run() {
                             Intent intent = new Intent();
                             intent.setClass(MainActivity.this, ShowResultList.class);
-                            intent.putExtra("result", result);
+                            intent.putExtra(Constants.result, result);
                             startActivity(intent);
                         }
                     }, 3000);
