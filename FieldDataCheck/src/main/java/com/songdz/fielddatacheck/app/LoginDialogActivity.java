@@ -17,7 +17,6 @@ import android.widget.EditText;
 import com.songdz.util.ActivitiesContainer;
 import com.songdz.util.SharedPreferencesHelper;
 
-//abbbbbbb
 public class LoginDialogActivity extends Activity {
 
     private String username;
