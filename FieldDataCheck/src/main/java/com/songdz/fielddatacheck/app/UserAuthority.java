@@ -4,24 +4,24 @@ package com.songdz.fielddatacheck.app;
  * Created by SongDz on 2014/6/13.
  */
 public enum UserAuthority {
-    PRIVILEGED_USER(0), SUPER_USER(1), COMMON_USER(2), INVALID_USER(-1);
+    INVALID_USER("INVALID_USER"), COMMON_USER("COMMON_USER"), SUPER_USER("SUPER_USER"), PRIVILEGED_USER("PRIVILEGED_USER") ;
 
-    private int value;
-    private UserAuthority(int value) {
+    private String value;
+    private UserAuthority(String value) {
         this.value = value;
     }
 
     @Override
     public String toString() {
-        return String.valueOf(this.value);
+        return this.value;
     }
     public static UserAuthority valueOf(int i) {
         switch (i) {
-            case 0:
+            case 2:
                 return PRIVILEGED_USER;
             case 1:
                 return SUPER_USER;
-            case 2:
+            case 0:
                 return COMMON_USER;
             case -1:
                 return INVALID_USER;
@@ -29,4 +29,5 @@ public enum UserAuthority {
                 return INVALID_USER;
         }
     }
+
 }

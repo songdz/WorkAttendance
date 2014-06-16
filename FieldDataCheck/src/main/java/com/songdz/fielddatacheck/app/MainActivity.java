@@ -33,17 +33,20 @@ import java.util.logging.Handler;
 
 public class MainActivity extends Activity {
 
-    private Button btn_send;
-    private TextView tv_show_result;
+    private Button btn_get_last_time;
+    private TextView tv_show_user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        btn_send = (Button)findViewById(R.id.request);
-        tv_show_result = (TextView)findViewById(R.id.show_result);
+        getWidget();
+        tv_show_user.setText("  Hi, " + UserInfo.username + "  ");
+        setButtonOnClickListener();
+    }
 
-        btn_send.setOnClickListener(new View.OnClickListener() {
+    private void setButtonOnClickListener() {
+        btn_get_last_time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Thread networkRequest = new Thread(new NetworkRequest());
@@ -54,6 +57,10 @@ public class MainActivity extends Activity {
             }
         });
     }
+    private void getWidget() {
+        btn_get_last_time = (Button)findViewById(R.id.button_get_last_time);
+        tv_show_user = (TextView)findViewById(R.id.textView_show_user);
+    }
     android.os.Handler handler = new android.os.Handler();
     class NetworkRequest implements Runnable {
         String result = ResponseCode.WRONG_REQUEST;
@@ -61,8 +68,8 @@ public class MainActivity extends Activity {
         public void run() {
             List<NameValuePair> paramList = new ArrayList<NameValuePair>();
             paramList.add(new BasicNameValuePair(Constants.request, RequestCode.CHECK_DATA));
-            paramList.add(new BasicNameValuePair(Constants.username, "songdz"));
-            paramList.add(new BasicNameValuePair(Constants.password, "songdz"));
+            paramList.add(new BasicNameValuePair(Constants.username, UserInfo.username));
+            paramList.add(new BasicNameValuePair(Constants.password, UserInfo.password));
             paramList.add(new BasicNameValuePair(Constants.querySql, RequestCode.querySql_checkData));
             HttpResponse response = SimpleHttpRequest.httpPostRequest(RequestCode.httpUrl_checkData, paramList);
             if ((response != null) && (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK)) {
@@ -78,7 +85,6 @@ public class MainActivity extends Activity {
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    tv_show_result.setText(result);
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {

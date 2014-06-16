@@ -22,6 +22,8 @@ import java.util.List;
  * Created by SongDz on 2014/6/13.
  */
 public class SimpleHttpRequest {
+    private int CONNECTION_TIMEOUT = 1000;
+    private int SO_TIMEOUT = 5000;
     private SimpleHttpRequest() {}
     public static HttpResponse httpPostRequest(String httpUrl, List<NameValuePair> paramList) {
         HttpResponse response = null;

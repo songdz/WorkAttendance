@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -18,9 +17,6 @@ import com.songdz.util.ActivitiesContainer;
 import com.songdz.util.SharedPreferencesHelper;
 
 public class LoginDialogActivity extends Activity {
-
-    private String username;
-    private String password;
 
     private Button btn_login;
     private Button btn_login_offline;
@@ -46,6 +42,7 @@ public class LoginDialogActivity extends Activity {
             public void onClick(View v) {
                 getUsernamePassword();
                 login_offline();
+                et_password.setText(null);
             }
         });
         btn_cancel.setOnClickListener(new View.OnClickListener() {
@@ -59,58 +56,76 @@ public class LoginDialogActivity extends Activity {
             public void onClick(View v) {
                 getUsernamePassword();
                 login();
+                et_password.setText(null);
             }
         });
     }
 
     private void getUsernamePassword() {
-        username = et_username.getText().toString().trim();
-        password = et_password.getText().toString().trim();
+        UserInfo.username = et_username.getText().toString().trim();
+        UserInfo.password = et_password.getText().toString().trim();
     }
 
     private void login_offline() {
         if(inputIsEmpty()) {
             return;
         }
-        SharedPreferencesHelper user_info = new SharedPreferencesHelper(LoginDialogActivity.this, "user_info");
-        String sp_username = user_info.getValue("username");
-        String sp_password = user_info.getValue("password");
-        if(username.equals(sp_username) && password.equals(sp_password)) {
-            showAlertDialog("It's ok");
-        } else {
+        if(CheckPassword.checkPasswordOffline(LoginDialogActivity.this) == UserAuthority.INVALID_USER) {
             showAlertDialog(getString(R.string.invalid_username_password));
+        } else {
+            UserInfo.onlineState = OnlineState.OFFLINE;
+            showAlertDialog("It's ok");
         }
     }
-
+    android.os.Handler handler = new android.os.Handler();
     private void login() {
         if(inputIsEmpty()) {
             return;
         }
-        logining();
+        loginingDialog();
         Thread loginThread = new Thread(new Runnable() {
             @Override
             public void run() {
+                if(CheckPassword.checkPassword() == UserAuthority.INVALID_USER) {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            progressDialog.cancel();
+                            showAlertDialog(getString(R.string.invalid_username_password));
+                        }
+                    });
+                    return;
+                }
                 if(ck_remember_password.isChecked()) {
                     SharedPreferencesHelper user_info = new SharedPreferencesHelper(LoginDialogActivity.this, "user_info");
-                    user_info.putValue("username", username);
-                    user_info.putValue("password", password);
+                    user_info.putValue("username", UserInfo.username);
+                    user_info.putValue("password", UserInfo.password);
+                    user_info.putValue("authority", UserInfo.authority.ordinal() + "");
                 }
+                UserInfo.onlineState = OnlineState.OFFLINE;
+                //Start Main Activity here
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        progressDialog.cancel();
+                    }
+                });
             }
         });
         loginThread.start();
     }
 
-    private void logining() {
+    private void loginingDialog() {
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("登陆");
         progressDialog.setMessage("正在登陆服务器，请稍后...");
         progressDialog.setCanceledOnTouchOutside(false);
-        progressDialog.setCancelable(false);
+//        progressDialog.setCancelable(false);
         progressDialog.show();
     }
 
     private boolean inputIsEmpty() {
-        if(username.isEmpty() || password.isEmpty()) {
+        if(UserInfo.username.isEmpty() || UserInfo.password.isEmpty()) {
             showAlertDialog(getString(R.string.not_empty_username_password));
             return true;
         }
