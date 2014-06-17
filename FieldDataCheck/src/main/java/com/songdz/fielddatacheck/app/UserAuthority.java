@@ -16,7 +16,7 @@ public enum UserAuthority {
         return this.value;
     }
     public static UserAuthority valueOf(int i) {
-        switch (i) {
+        switch (i - 1) {
             case 2:
                 return PRIVILEGED_USER;
             case 1:

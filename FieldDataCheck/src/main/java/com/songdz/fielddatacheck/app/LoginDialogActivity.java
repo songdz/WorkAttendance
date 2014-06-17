@@ -27,13 +27,20 @@ public class LoginDialogActivity extends Activity {
     private ProgressDialog progressDialog;
     private CheckBox ck_remember_password;
 
+    private static boolean ChangeUser = false;
+
     android.os.Handler handler = new android.os.Handler();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_dialog);
         setFinishOnTouchOutside(false);
-        ActivitiesContainer.getInstance().addActivity(this);
+        Intent intent = getIntent();
+        ChangeUser = intent.getBooleanExtra("ChangeUser", false);
+        if(!ChangeUser) {
+            ActivitiesContainer.getInstance().exitAllActivities();
+            ActivitiesContainer.getInstance().addActivity(this);
+        }
         getWidget();
         setButtonOnClickListener();
     }
@@ -49,7 +56,12 @@ public class LoginDialogActivity extends Activity {
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActivitiesContainer.getInstance().exitAllActivities();
+                if(ChangeUser) {
+                    LoginDialogActivity.this.finish();
+                } else {
+                    ActivitiesContainer.getInstance().exitAllActivities();
+                    System.exit(0);
+                }
             }
         });
         btn_login.setOnClickListener(new View.OnClickListener() {
@@ -97,6 +109,10 @@ public class LoginDialogActivity extends Activity {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
+                        if(ChangeUser) {
+                            ActivitiesContainer.getInstance().exitAllActivities();
+                            ActivitiesContainer.getInstance().addActivity(LoginDialogActivity.this);
+                        }
                         Intent intent = new Intent();
                         intent.setClass(LoginDialogActivity.this, MainActivity.class);
                         startActivity(intent);
@@ -108,11 +124,20 @@ public class LoginDialogActivity extends Activity {
         });
         loginThread.start();
     }
+//    private void login() {
+//        UserInfo.username = "song";
+//        UserInfo.password = "123";
+//        UserInfo.authority = UserAuthority.valueOf(1);
+//        SharedPreferencesHelper user_info = new SharedPreferencesHelper(LoginDialogActivity.this, "user_info");
+//        user_info.putValue("username", UserInfo.username);
+//        user_info.putValue("password", UserInfo.password);
+//        user_info.putValue("authority", UserInfo.authority.ordinal() + "");
+//    }
 
     private void loginingDialog() {
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("登陆");
-        progressDialog.setMessage("正在登陆服务器，请稍后...");
+        progressDialog.setMessage("正在登陆，请稍后...");
         progressDialog.setCanceledOnTouchOutside(false);
 //        progressDialog.setCancelable(false);
         progressDialog.show();

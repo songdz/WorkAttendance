@@ -38,7 +38,8 @@ public class MainActivity extends Activity {
 
     private static final int Menu_ChangeUser = Menu.FIRST;
     private static final int Menu_About = Menu.FIRST + 1;
-    private static final int Menu_Exit = Menu.FIRST + 2;
+    private static final int Menu_Logout = Menu.FIRST + 2;
+    private static final int Menu_Exit = Menu.FIRST + 3;
 
     private Button btn_get_last_time;
     private TextView tv_show_user;
@@ -47,6 +48,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ActivitiesContainer.getInstance().addActivity(this);
         getWidget();
         tv_show_user.setText("  Hi, " + UserInfo.username + "  ");
         setButtonOnClickListener();
@@ -58,9 +60,6 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 Thread networkRequest = new Thread(new NetworkRequest());
                 networkRequest.start();
-                /*Intent intent = new Intent();
-                intent.setClass(MainActivity.this, ShowResultList.class);
-                startActivity(intent);*/
             }
         });
     }
@@ -111,6 +110,7 @@ public class MainActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         menu.add(0, Menu_ChangeUser, 0, R.string.menu_change_user);
+        menu.add(0, Menu_Logout, 0, R.string.menu_logout);
         menu.add(0, Menu_About, 0, R.string.menu_about);
         menu.add(0, Menu_Exit, 0, R.string.menu_exit);
         return true;
@@ -123,19 +123,34 @@ public class MainActivity extends Activity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         switch (id) {
-            case Menu_ChangeUser: break;
+            case Menu_ChangeUser:
+                changeUser();
+                break;
+            case Menu_Logout:
+                logout();
+                break;
             case Menu_About:
                 showAboutDialog();
                 break;
             case Menu_Exit:
                 ActivitiesContainer.getInstance().exitAllActivities();
+                System.exit(0);
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
     private void changeUser() {
+        Intent intent = new Intent();
+        intent.setClass(MainActivity.this, LoginDialogActivity.class);
+        intent.putExtra("ChangeUser", true);
+        startActivity(intent);
+    }
 
+    private void logout() {
+        Intent intent = new Intent();
+        intent.setClass(MainActivity.this, LoginDialogActivity.class);
+        startActivity(intent);
     }
 
     private void showAboutDialog() {

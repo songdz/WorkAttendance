@@ -33,5 +33,6 @@
         \n
         <b>有任何建议或者反馈可以随时联系作者</b>
     </string>
+    <string name="menu_logout">注销用户</string>
 
 </resources>

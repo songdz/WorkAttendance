@@ -7,6 +7,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.SimpleAdapter;
 
+import com.songdz.util.ActivitiesContainer;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,6 +25,7 @@ public class ShowResultList extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_result);
+        ActivitiesContainer.getInstance().addActivity(this);
         List<Map<String, String>> list = getListData();
         setAdapter(list);
     }
@@ -52,8 +55,8 @@ public class ShowResultList extends ListActivity {
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 map = new HashMap<String, String>();
-                map.put("项目内节点编号", jsonObject.getString("项目内节点编号"));
-                map.put("最后的数据接收时间", jsonObject.getString("最后的数据接收时间"));
+                map.put(getString(R.string.title_node), jsonObject.getString(getString(R.string.title_node)));
+                map.put(getString(R.string.title_last_time), jsonObject.getString(getString(R.string.title_last_time)));
                 list.add(map);
             }
         } catch (JSONException e) {

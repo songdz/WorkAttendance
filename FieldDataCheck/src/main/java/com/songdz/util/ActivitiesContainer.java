@@ -29,7 +29,6 @@ public class ActivitiesContainer extends Application {
                 activity.finish();
             }
         }
-        System.exit(0);
     }
 
 }
