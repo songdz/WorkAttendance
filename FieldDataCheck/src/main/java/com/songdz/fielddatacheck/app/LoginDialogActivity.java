@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,6 +27,7 @@ public class LoginDialogActivity extends Activity {
     private ProgressDialog progressDialog;
     private CheckBox ck_remember_password;
 
+    android.os.Handler handler = new android.os.Handler();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,9 +42,8 @@ public class LoginDialogActivity extends Activity {
         btn_login_offline.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getUsernamePassword();
-                login_offline();
-                et_password.setText(null);
+                UserInfo.onlineState = OnlineState.OFFLINE;
+                login();
             }
         });
         btn_cancel.setOnClickListener(new View.OnClickListener() {
@@ -54,9 +55,8 @@ public class LoginDialogActivity extends Activity {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getUsernamePassword();
+                UserInfo.onlineState = OnlineState.ONLINE;
                 login();
-                et_password.setText(null);
             }
         });
     }
@@ -66,27 +66,17 @@ public class LoginDialogActivity extends Activity {
         UserInfo.password = et_password.getText().toString().trim();
     }
 
-    private void login_offline() {
-        if(inputIsEmpty()) {
-            return;
-        }
-        if(CheckPassword.checkPasswordOffline(LoginDialogActivity.this) == UserAuthority.INVALID_USER) {
-            showAlertDialog(getString(R.string.invalid_username_password));
-        } else {
-            UserInfo.onlineState = OnlineState.OFFLINE;
-            showAlertDialog("It's ok");
-        }
-    }
-    android.os.Handler handler = new android.os.Handler();
     private void login() {
+        getUsernamePassword();
         if(inputIsEmpty()) {
             return;
         }
         loginingDialog();
+        et_password.setText(null);
         Thread loginThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                if(CheckPassword.checkPassword() == UserAuthority.INVALID_USER) {
+                if(CheckPassword.checkPassword(LoginDialogActivity.this) == UserAuthority.INVALID_USER) {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
@@ -96,18 +86,22 @@ public class LoginDialogActivity extends Activity {
                     });
                     return;
                 }
-                if(ck_remember_password.isChecked()) {
-                    SharedPreferencesHelper user_info = new SharedPreferencesHelper(LoginDialogActivity.this, "user_info");
-                    user_info.putValue("username", UserInfo.username);
-                    user_info.putValue("password", UserInfo.password);
-                    user_info.putValue("authority", UserInfo.authority.ordinal() + "");
+                if(UserInfo.onlineState == OnlineState.ONLINE) {
+                    if(ck_remember_password.isChecked()) {
+                        SharedPreferencesHelper user_info = new SharedPreferencesHelper(LoginDialogActivity.this, "user_info");
+                        user_info.putValue("username", UserInfo.username);
+                        user_info.putValue("password", UserInfo.password);
+                        user_info.putValue("authority", UserInfo.authority.ordinal() + "");
+                    }
                 }
-                UserInfo.onlineState = OnlineState.OFFLINE;
-                //Start Main Activity here
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
+                        Intent intent = new Intent();
+                        intent.setClass(LoginDialogActivity.this, MainActivity.class);
+                        startActivity(intent);
                         progressDialog.cancel();
+                        LoginDialogActivity.this.finish();
                     }
                 });
             }

@@ -26,7 +26,15 @@ import java.util.List;
  */
 public class CheckPassword implements RequestCode, ResponseCode {
 
-    public static UserAuthority checkPassword() {
+    public static UserAuthority checkPassword(Context c) {
+        if(UserInfo.onlineState == OnlineState.ONLINE) {
+            return checkPasswordOnline();
+        } else {
+            return checkPasswordOffline(c);
+        }
+    }
+
+    private static UserAuthority checkPasswordOnline() {
         List<NameValuePair> paramList = new ArrayList<NameValuePair>();
         paramList.add(new BasicNameValuePair(Constants.request, CHECK_PASSWORD));
         paramList.add(new BasicNameValuePair(Constants.username, UserInfo.username));
@@ -42,7 +50,7 @@ public class CheckPassword implements RequestCode, ResponseCode {
         return UserInfo.authority;
     }
 
-    public static UserAuthority checkPasswordOffline(Context c) {
+    private static UserAuthority checkPasswordOffline(Context c) {
         SharedPreferencesHelper user_info = new SharedPreferencesHelper(c, "user_info");
         String sp_username = user_info.getValue("username");
         String sp_password = user_info.getValue("password");

@@ -20,5 +20,18 @@
     <string name="not_empty_username_password">用户名和密码不能为空！</string>
     <string name="invalid_username_password">用户名和密码错误！</string>
     <string name="get_last_time">得到最后的数据接收时间</string>
+    <string name="menu_change_user">更改用户</string>
+    <string name="menu_about">关于程序</string>
+    <string name="menu_exit">退出程序</string>
+    <string name="about_author">关于作者</string>
+    <string name="author_info" >
+        <i>作者： 宋东泽</i>
+        \n
+        \n
+        <i>联系： songdongze@gmail.com</i>
+        \n
+        \n
+        <b>有任何建议或者反馈可以随时联系作者</b>
+    </string>
 
 </resources>

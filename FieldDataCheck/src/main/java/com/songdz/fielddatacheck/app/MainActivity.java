@@ -1,6 +1,8 @@
 package com.songdz.fielddatacheck.app;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Entity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.songdz.util.ActivitiesContainer;
 import com.songdz.util.SimpleHttpRequest;
 
 import org.apache.http.HttpResponse;
@@ -32,6 +35,10 @@ import java.util.logging.Handler;
 
 
 public class MainActivity extends Activity {
+
+    private static final int Menu_ChangeUser = Menu.FIRST;
+    private static final int Menu_About = Menu.FIRST + 1;
+    private static final int Menu_Exit = Menu.FIRST + 2;
 
     private Button btn_get_last_time;
     private TextView tv_show_user;
@@ -103,7 +110,9 @@ public class MainActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        menu.add(0, Menu_ChangeUser, 0, R.string.menu_change_user);
+        menu.add(0, Menu_About, 0, R.string.menu_about);
+        menu.add(0, Menu_Exit, 0, R.string.menu_exit);
         return true;
     }
 
@@ -113,9 +122,30 @@ public class MainActivity extends Activity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case Menu_ChangeUser: break;
+            case Menu_About:
+                showAboutDialog();
+                break;
+            case Menu_Exit:
+                ActivitiesContainer.getInstance().exitAllActivities();
+                break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void changeUser() {
+
+    }
+
+    private void showAboutDialog() {
+        AlertDialog dialog = new  AlertDialog.Builder(this)
+                .setTitle(R.string.about_author)
+                .setMessage(R.string.author_info)
+                .setIcon(R.drawable.author)
+                .setPositiveButton(R.string.ok, null).create();
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(false);
+        dialog.show();
     }
 }
