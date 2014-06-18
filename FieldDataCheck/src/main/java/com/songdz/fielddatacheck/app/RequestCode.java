@@ -7,6 +7,7 @@ public interface RequestCode {
     String CHECK_PASSWORD = "CheckPassword";
     String CHECK_DATA = "CheckData";
     String querySql_checkData = "SELECT 项目内节点编号,MAX(紧缩型时间传感器_实时时间) FROM 水文监测仪lzipv6 GROUP BY 项目内节点编号";
+    String querySql_getLastData = "SELECT * FROM 生态水文数据表 WHERE 项目内节点编号 = ? ORDER BY 数据记录编号 DESC LIMIT 0,1;";
     String httpUrl_checkData = "http://159.226.15.192:8080/FieldDataCheck/CheckData";
     String httpUrl_checkPassword = "http://159.226.15.192:8080/FieldDataCheck/CheckPassword";
 }

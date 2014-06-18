@@ -3,14 +3,21 @@ package com.songdz.fielddatacheck.app;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Entity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.songdz.util.ActivitiesContainer;
 import com.songdz.util.SimpleHttpRequest;
@@ -42,8 +49,12 @@ public class MainActivity extends Activity {
     private static final int Menu_Exit = Menu.FIRST + 3;
 
     private Button btn_get_last_time;
+    private Button btn_get_last_data;
     private TextView tv_show_user;
 
+    private ProgressDialog progressDialog;
+
+    android.os.Handler handler = new android.os.Handler();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,16 +69,24 @@ public class MainActivity extends Activity {
         btn_get_last_time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                processingDialog();
                 Thread networkRequest = new Thread(new NetworkRequest());
                 networkRequest.start();
+            }
+        });
+        btn_get_last_data.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inputQueryIdDialog();
             }
         });
     }
     private void getWidget() {
         btn_get_last_time = (Button)findViewById(R.id.button_get_last_time);
+        btn_get_last_data = (Button)findViewById(R.id.button_get_last_data);
         tv_show_user = (TextView)findViewById(R.id.textView_show_user);
     }
-    android.os.Handler handler = new android.os.Handler();
+
     class NetworkRequest implements Runnable {
         String result = ResponseCode.WRONG_REQUEST;
         @Override
@@ -98,6 +117,7 @@ public class MainActivity extends Activity {
                             intent.setClass(MainActivity.this, ShowResultList.class);
                             intent.putExtra(Constants.result, result);
                             startActivity(intent);
+                            progressDialog.cancel();
                         }
                     }, 3000);
                 }
@@ -105,6 +125,47 @@ public class MainActivity extends Activity {
         }
     }
 
+    private void inputQueryIdDialog() {
+        final EditText et_input = new EditText(this);
+        et_input.setInputType(InputType.TYPE_CLASS_NUMBER);
+        et_input.setHint("节点编号");
+        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        et_input.setLayoutParams(layoutParams);
+        et_input.setGravity(Gravity.CENTER);
+        AlertDialog alertDialog = new AlertDialog.Builder(this)
+                .setTitle("输入查询节点的项目内编号")
+                .setView(et_input)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String input = et_input.getText().toString();
+                        if (input.isEmpty()) {
+                            Toast.makeText(MainActivity.this, "输入不能为空！", Toast.LENGTH_SHORT).show();
+                        } else {
+                            System.out.println(input);
+                        }
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .create();
+        alertDialog.setCanceledOnTouchOutside(false);
+        alertDialog.show();
+    }
+
+    private void processingDialog() {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("处理");
+        progressDialog.setMessage("正在处理，请稍后...");
+        progressDialog.setCanceledOnTouchOutside(false);
+//        progressDialog.setCancelable(false);
+        progressDialog.show();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -163,4 +224,5 @@ public class MainActivity extends Activity {
         dialog.setCancelable(false);
         dialog.show();
     }
+
 }

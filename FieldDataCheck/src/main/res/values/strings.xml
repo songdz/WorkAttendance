@@ -34,5 +34,6 @@
         <b>有任何建议或者反馈可以随时联系作者</b>
     </string>
     <string name="menu_logout">注销用户</string>
+    <string name="get_last_data">得到某节点的最新数据</string>
 
 </resources>
