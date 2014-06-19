@@ -70,7 +70,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 processingDialog();
-                Thread networkRequest = new Thread(new NetworkRequest());
+                Thread networkRequest = new Thread(new NetworkRequest(RequestCode.querySql_checkData, ShowResultList.class));
                 networkRequest.start();
             }
         });
@@ -89,13 +89,19 @@ public class MainActivity extends Activity {
 
     class NetworkRequest implements Runnable {
         String result = ResponseCode.WRONG_REQUEST;
+        String querySql;
+        Class jumpClass;
+        public NetworkRequest(String querySql, Class jumpClass) {
+            this.querySql = querySql;
+            this.jumpClass = jumpClass;
+        }
         @Override
         public void run() {
             List<NameValuePair> paramList = new ArrayList<NameValuePair>();
             paramList.add(new BasicNameValuePair(Constants.request, RequestCode.CHECK_DATA));
             paramList.add(new BasicNameValuePair(Constants.username, UserInfo.username));
             paramList.add(new BasicNameValuePair(Constants.password, UserInfo.password));
-            paramList.add(new BasicNameValuePair(Constants.querySql, RequestCode.querySql_checkData));
+            paramList.add(new BasicNameValuePair(Constants.querySql, querySql));
             HttpResponse response = SimpleHttpRequest.httpPostRequest(RequestCode.httpUrl_checkData, paramList);
             if ((response != null) && (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK)) {
                 try {
@@ -110,17 +116,17 @@ public class MainActivity extends Activity {
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    handler.postDelayed(new Runnable() {
+/*                    handler.postDelayed(new Runnable() {
                         @Override
-                        public void run() {
+                        public void run() {*/
                             Intent intent = new Intent();
-                            intent.setClass(MainActivity.this, ShowResultList.class);
+                            intent.setClass(MainActivity.this, jumpClass);
                             intent.putExtra(Constants.result, result);
                             startActivity(intent);
                             progressDialog.cancel();
                         }
-                    }, 3000);
-                }
+//                    }, 3000);
+//                }
             });
         }
     }
@@ -143,6 +149,9 @@ public class MainActivity extends Activity {
                         if (input.isEmpty()) {
                             Toast.makeText(MainActivity.this, "输入不能为空！", Toast.LENGTH_SHORT).show();
                         } else {
+                            String querySql = RequestCode.querySql_getLastData.replace("?", input);
+                            Thread networkRequest = new Thread(new NetworkRequest(querySql, ShowLastDataActivity.class));
+                            networkRequest.start();
                             System.out.println(input);
                         }
                     }
