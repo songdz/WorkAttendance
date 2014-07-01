@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TitleBorderLayout">
+    <!-- The title of BorderTitleLayout. -->
+        <attr name="titleText" format="string" />
+    <!-- The size of title. -->
+        <attr name="titleTextSize" format="dimension" />
+    <!-- The title start postion. -->
+        <attr name="titlePosition" format="dimension" />
+    <!-- The color of title. -->
+        <attr name="titleTextColor" format="reference|color" />
+    <!-- The size of border. -->
+        <attr name="borderSize" format="dimension" />
+    <!-- The color of border. -->
+        <attr name="borderColor" format="reference|color" />
+    </declare-styleable>
+</resources>

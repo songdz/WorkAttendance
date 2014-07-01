@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nodeNumber">项目内节点编号：</string>
+    <string name="realTime">紧缩型时间传感器_实时时间：</string>
+    <string name="batteryVoltage">电池电压传感器_电压：</string>
+    <string name="solarVoltage">太阳能电压传感器_电压：</string>
+    <string name="infraredTemperature">红外温度传感器_表面温度：</string>
+    <string name="anemometer">风速风向传感器</string>
+    <string name="anemometerDirection">风向：</string>
+    <string name="anemometerSpeed">风速：</string>
+    <string name="airSensor">空气温湿度传感器</string>
+    <string name="airTemperature">温度：</string>
+    <string name="airHumidity">湿度：</string>
+    <string name="precipitation">雨量传感器_降雨量：</string>
+
+    <string-array name="soilSensorSelect">
+        <item>土壤传感器1</item>
+        <item>土壤传感器2</item>
+        <item>土壤传感器3</item>
+    </string-array>
+
+    <string name="soilSensor">土壤传感器</string>
+    <string name="degreeCentigrade">摄氏温度</string>
+    <string name="waterVolume">含水量体积比</string>
+    <string name="salinity">盐渍度</string>
+    <string name="conductivity">电导率</string>
+</resources>
