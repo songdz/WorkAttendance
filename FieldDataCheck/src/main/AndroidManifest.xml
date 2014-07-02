@@ -29,15 +29,15 @@
 
             <!-- android:theme="@style/Mytheme -->
 "
+        </activity>
+        <activity
+            android:name=".ShowLastDataActivity"
+            android:label="@string/title_activity_show_last_data" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".ShowLastDataActivity"
-            android:label="@string/title_activity_show_last_data" >
         </activity>
     </application>
 

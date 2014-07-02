@@ -29,6 +29,8 @@
         \n <b>有任何建议或者反馈可以随时联系作者</b></string>
     <string name="menu_logout">注销用户</string>
     <string name="get_last_data">得到某节点的最新数据</string>
-    <string name="title_activity_show_last_data">ShowLastDataActivity</string>
+    <string name="title_activity_show_last_data">最近一条数据</string>
+    <string name="nodata">没有数据！</string>
+
 
 </resources>
