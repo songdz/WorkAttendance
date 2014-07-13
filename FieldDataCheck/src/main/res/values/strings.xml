@@ -25,7 +25,7 @@
     <string name="menu_exit">退出程序</string>
     <string name="about_author">关于作者</string>
     <string name="author_info"><i>作者： 宋东泽</i>         \n
-        \n <i>联系： songdongze@gmail.com</i>         \n
+        \n <i>联系： songdongze1990@gmail.com</i>         \n
         \n <b>有任何建议或者反馈可以随时联系作者</b></string>
     <string name="menu_logout">注销用户</string>
     <string name="get_last_data">得到某节点的最新数据</string>

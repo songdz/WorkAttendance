@@ -70,7 +70,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 processingDialog();
-                Thread networkRequest = new Thread(new NetworkRequest(RequestCode.querySql_checkData, ShowResultList.class));
+                Thread networkRequest = new Thread(new NetworkRequest(RequestCode.CHECK_DATA_LAST_TIME, RequestCode.querySql_getLastTime, ShowResultList.class));
                 networkRequest.start();
             }
         });
@@ -88,17 +88,19 @@ public class MainActivity extends Activity {
     }
 
     class NetworkRequest implements Runnable {
+        String requestCode;
         String result = ResponseCode.WRONG_REQUEST;
         String querySql;
         Class jumpClass;
-        public NetworkRequest(String querySql, Class jumpClass) {
+        public NetworkRequest(String requestCode, String querySql, Class jumpClass) {
+            this.requestCode = requestCode;
             this.querySql = querySql;
             this.jumpClass = jumpClass;
         }
         @Override
         public void run() {
             List<NameValuePair> paramList = new ArrayList<NameValuePair>();
-            paramList.add(new BasicNameValuePair(Constants.request, RequestCode.CHECK_DATA));
+            paramList.add(new BasicNameValuePair(Constants.request, requestCode));
             paramList.add(new BasicNameValuePair(Constants.username, UserInfo.username));
             paramList.add(new BasicNameValuePair(Constants.password, UserInfo.password));
             paramList.add(new BasicNameValuePair(Constants.querySql, querySql));
@@ -106,6 +108,7 @@ public class MainActivity extends Activity {
             if ((response != null) && (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK)) {
                 try {
                     result = EntityUtils.toString(response.getEntity());
+         System.out.println("MainActivity:"+result);
                 } catch (IOException e) {
                     e.printStackTrace();
                     result = ResponseCode.WRONG_REQUEST;
@@ -150,7 +153,7 @@ public class MainActivity extends Activity {
                             Toast.makeText(MainActivity.this, "输入不能为空！", Toast.LENGTH_SHORT).show();
                         } else {
                             String querySql = RequestCode.querySql_getLastData.replace("?", input);
-                            Thread networkRequest = new Thread(new NetworkRequest(querySql, ShowLastDataActivity.class));
+                            Thread networkRequest = new Thread(new NetworkRequest(RequestCode.CHECK_DATA_LAST_DATA, querySql, ShowLastDataActivity.class));
                             networkRequest.start();
                             System.out.println(input);
                         }

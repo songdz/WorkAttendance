@@ -13,6 +13,9 @@ import android.widget.Toast;
 
 import com.songdz.fielddatacheck.app.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class ShowLastDataActivity extends Activity {
 
     private TextView tv_realTime;
@@ -108,13 +111,57 @@ public class ShowLastDataActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_last_data);
-        Intent intent = getIntent();
-        nodeDataInfo = (NodeDataInfo)intent.getSerializableExtra("nodeDataInfo");
+        getNodeDataInfo();
         if(nodeDataInfo != null)
             HAS_DATA = true;
         getWidget();
         setSpinnerChangedListen();
         setWidgetText();
+    }
+
+    private void getNodeDataInfo() {
+        Intent intent = getIntent();
+        String result = intent.getStringExtra(Constants.result);
+        nodeDataInfo = new NodeDataInfo();
+        try {
+            JSONObject sensorJSON = new JSONObject(result);
+            nodeDataInfo.setNodeNumber(sensorJSON.getString("nodeNumber"));
+            nodeDataInfo.setRealTime(sensorJSON.getString("realTime"));
+            nodeDataInfo.setBatteryVoltage(sensorJSON.getString("batteryVoltage"));
+            nodeDataInfo.setSolarVoltage(sensorJSON.getString("solarVoltage"));
+            nodeDataInfo.setInfraredTemperature(sensorJSON.getString("infraredTemperature"));
+            nodeDataInfo.setAnemometerDirection(sensorJSON.getString("anemometerDirection"));
+            nodeDataInfo.setAnemometerSpeed(sensorJSON.getString("anemometerSpeed"));
+            nodeDataInfo.setAirTemperature(sensorJSON.getString("airTemperature"));
+            nodeDataInfo.setAirHumidity(sensorJSON.getString("airHumidity"));
+            nodeDataInfo.setPrecipitation(sensorJSON.getString("precipitation"));
+            JSONObject soilSensorJSON1 = sensorJSON.getJSONObject("soilSensor1");
+            SoilSensor soilSensor1 = new SoilSensor();
+            soilSensor1.setDegreeCentigrade(soilSensorJSON1.getString("degreeCentigrade"));
+            soilSensor1.setWaterVolume(soilSensorJSON1.getString("waterVolume"));
+            soilSensor1.setSalinity(soilSensorJSON1.getString("salinity"));
+            soilSensor1.setConductivity(soilSensorJSON1.getString("conductivity"));
+            JSONObject soilSensorJSON2 = sensorJSON.getJSONObject("soilSensor2");
+            SoilSensor soilSensor2 = new SoilSensor();
+            soilSensor2.setDegreeCentigrade(soilSensorJSON2.getString("degreeCentigrade"));
+            soilSensor2.setWaterVolume(soilSensorJSON2.getString("waterVolume"));
+            soilSensor2.setSalinity(soilSensorJSON2.getString("salinity"));
+            soilSensor2.setConductivity(soilSensorJSON2.getString("conductivity"));
+            JSONObject soilSensorJSON3 = sensorJSON.getJSONObject("soilSensor1");
+            SoilSensor soilSensor3 = new SoilSensor();
+            soilSensor3.setDegreeCentigrade(soilSensorJSON3.getString("degreeCentigrade"));
+            soilSensor3.setWaterVolume(soilSensorJSON3.getString("waterVolume"));
+            soilSensor3.setSalinity(soilSensorJSON3.getString("salinity"));
+            soilSensor3.setConductivity(soilSensorJSON3.getString("conductivity"));
+            nodeDataInfo.setSoilSensor1(soilSensor1);
+            nodeDataInfo.setSoilSensor2(soilSensor2);
+            nodeDataInfo.setSoilSensor3(soilSensor3);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            nodeDataInfo = null;
+            HAS_DATA = Boolean.FALSE;
+        }
+        HAS_DATA = Boolean.TRUE;
     }
 
 

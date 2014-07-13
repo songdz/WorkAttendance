@@ -39,7 +39,7 @@ public class CheckPassword implements RequestCode, ResponseCode {
         paramList.add(new BasicNameValuePair(Constants.request, CHECK_PASSWORD));
         paramList.add(new BasicNameValuePair(Constants.username, UserInfo.username));
         paramList.add(new BasicNameValuePair(Constants.password, UserInfo.password));
-        HttpResponse response = SimpleHttpRequest.httpPostRequest(httpUrl_checkPassword, paramList);
+        HttpResponse response = SimpleHttpRequest.httpPostRequest(httpUrl_checkData, paramList);
         if ((response != null) && (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK)) {
             try {
                 UserInfo.authority = UserAuthority.valueOf(Integer.valueOf(EntityUtils.toString(response.getEntity())));

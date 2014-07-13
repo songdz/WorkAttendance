@@ -22,8 +22,8 @@ import java.util.List;
  * Created by SongDz on 2014/6/13.
  */
 public class SimpleHttpRequest {
-    private int CONNECTION_TIMEOUT = 1000;
-    private int SO_TIMEOUT = 5000;
+    private static int CONNECTION_TIMEOUT = 3000;
+    private static int SO_TIMEOUT = 50000;
     private SimpleHttpRequest() {}
     public static HttpResponse httpPostRequest(String httpUrl, List<NameValuePair> paramList) {
         HttpResponse response = null;
@@ -32,8 +32,8 @@ public class SimpleHttpRequest {
             UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(paramList, "UTF-8");
             request.setEntity(formEntity);
             HttpClient httpClient = new DefaultHttpClient();
-            httpClient.getParams().setIntParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 1000);
-            httpClient.getParams().setIntParameter(CoreConnectionPNames.SO_TIMEOUT, 5000);
+            httpClient.getParams().setIntParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, CONNECTION_TIMEOUT);
+            httpClient.getParams().setIntParameter(CoreConnectionPNames.SO_TIMEOUT, SO_TIMEOUT);
             response = httpClient.execute(request);
         } catch (ClientProtocolException e) {
             e.printStackTrace();

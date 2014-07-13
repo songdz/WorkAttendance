@@ -41,7 +41,8 @@ public class ShowResultList extends ListActivity {
     private List<Map<String, String>> getListData() {
         List<Map<String, String>> list = null;
         Intent intent = getIntent();
-        String result = intent.getStringExtra("result");
+        String result = intent.getStringExtra(Constants.result);
+System.out.println(result);
         if(result.equals("Wrong Request")) {
             return list;
         }
