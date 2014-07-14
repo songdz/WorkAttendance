@@ -34,6 +34,7 @@ public class LoginDialogActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_dialog);
+        setTitle(R.string.label_activity_login_dialog);
         setFinishOnTouchOutside(false);
         Intent intent = getIntent();
         ChangeUser = intent.getBooleanExtra("ChangeUser", false);

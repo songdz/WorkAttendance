@@ -36,7 +36,7 @@ public class ShowLastDataActivity extends Activity {
     NodeDataInfo nodeDataInfo = null;
 
 
-    private static boolean HAS_DATA = false;
+    private boolean HAS_DATA = false;
 
     private void getWidget() {
         tv_realTime = (TextView) findViewById(R.id.realTime);
@@ -111,17 +111,18 @@ public class ShowLastDataActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_last_data);
-        getNodeDataInfo();
-        if(nodeDataInfo != null)
-            HAS_DATA = true;
         getWidget();
+        getNodeDataInfo();
+        if(HAS_DATA)
+            setWidgetText();
         setSpinnerChangedListen();
-        setWidgetText();
     }
 
     private void getNodeDataInfo() {
         Intent intent = getIntent();
         String result = intent.getStringExtra(Constants.result);
+System.out.println(result);
+
         nodeDataInfo = new NodeDataInfo();
         try {
             JSONObject sensorJSON = new JSONObject(result);

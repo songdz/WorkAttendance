@@ -77,6 +77,7 @@ public class MainActivity extends Activity {
         btn_get_last_data.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                processingDialog();
                 inputQueryIdDialog();
             }
         });
@@ -122,12 +123,16 @@ public class MainActivity extends Activity {
 /*                    handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {*/
-                            Intent intent = new Intent();
-                            intent.setClass(MainActivity.this, jumpClass);
-                            intent.putExtra(Constants.result, result);
-                            startActivity(intent);
-                            progressDialog.cancel();
-                        }
+                    if(!ResponseCode.WRONG_REQUEST.equals(result)) {
+                        Intent intent = new Intent();
+                        intent.setClass(MainActivity.this, jumpClass);
+                        intent.putExtra(Constants.result, result);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(MainActivity.this, ResponseCode.WRONG_REQUEST, Toast.LENGTH_SHORT).show();
+                    }
+                    progressDialog.cancel();
+                }
 //                    }, 3000);
 //                }
             });

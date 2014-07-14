@@ -11,12 +11,16 @@ public enum UserAuthority {
         this.value = value;
     }
 
+    public int getAuthorityIntValue() {
+        return this.ordinal() - 1;
+    }
+
     @Override
     public String toString() {
         return this.value;
     }
     public static UserAuthority valueOf(int i) {
-        switch (i - 1) {
+        switch ( i ) {
             case 2:
                 return PRIVILEGED_USER;
             case 1:

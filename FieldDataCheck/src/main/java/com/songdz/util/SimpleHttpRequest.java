@@ -23,7 +23,7 @@ import java.util.List;
  */
 public class SimpleHttpRequest {
     private static int CONNECTION_TIMEOUT = 3000;
-    private static int SO_TIMEOUT = 50000;
+    private static int SO_TIMEOUT = 20000;
     private SimpleHttpRequest() {}
     public static HttpResponse httpPostRequest(String httpUrl, List<NameValuePair> paramList) {
         HttpResponse response = null;

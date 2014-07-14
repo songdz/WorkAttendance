@@ -18,23 +18,16 @@
         </activity>
         <activity
             android:name=".LoginDialogActivity"
-            android:label="@string/label_activity_login_dialog"
             android:theme="@android:style/Theme.Holo.Dialog" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <!-- android:theme="@style/Mytheme -->
-"
         </activity>
         <activity
             android:name=".ShowLastDataActivity"
             android:label="@string/title_activity_show_last_data" >
-            <!--<intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
         </activity>
     </application>
 
