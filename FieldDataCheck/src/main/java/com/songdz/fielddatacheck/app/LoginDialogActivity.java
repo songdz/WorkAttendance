@@ -45,7 +45,6 @@ public class LoginDialogActivity extends Activity {
         getWidget();
         setButtonOnClickListener();
     }
-
     private void setButtonOnClickListener() {
         btn_login_offline.setOnClickListener(new View.OnClickListener() {
             @Override
