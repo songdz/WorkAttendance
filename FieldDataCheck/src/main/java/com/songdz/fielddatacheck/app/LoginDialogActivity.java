@@ -45,14 +45,23 @@ public class LoginDialogActivity extends Activity {
         getWidget();
         setButtonOnClickListener();
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        SharedPreferencesHelper user_info = new SharedPreferencesHelper(LoginDialogActivity.this, "user_info");
+        et_username.setText(user_info.getValue("username"));
+        et_password.setText(user_info.getValue("password"));
+    }
+
     private void setButtonOnClickListener() {
-        btn_login_offline.setOnClickListener(new View.OnClickListener() {
+        /*btn_login_offline.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 UserInfo.onlineState = OnlineState.OFFLINE;
                 login();
             }
-        });
+        });*/
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,11 +108,11 @@ public class LoginDialogActivity extends Activity {
                     return;
                 }
                 if(UserInfo.onlineState == OnlineState.ONLINE) {
-                    if(ck_remember_password.isChecked()) {
+                    if(ck_remember_password.isChecked() && (UserInfo.authority.compareTo(UserAuthority.PRIVILEGED_USER) != 0 )) {
                         SharedPreferencesHelper user_info = new SharedPreferencesHelper(LoginDialogActivity.this, "user_info");
                         user_info.putValue("username", UserInfo.username);
                         user_info.putValue("password", UserInfo.password);
-                        user_info.putValue("authority", UserInfo.authority.ordinal() + "");
+                        user_info.putValue("authority", UserInfo.authority.getAuthorityIntValue() + "");
                     }
                 }
                 handler.post(new Runnable() {
