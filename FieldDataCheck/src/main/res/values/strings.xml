@@ -31,6 +31,6 @@
     <string name="get_last_data">得到某节点的最新数据</string>
     <string name="title_activity_show_last_data">最近一条数据</string>
     <string name="nodata">没有数据！</string>
-
+    <string name="title_activity_show_sensor_meta_data">传感器元数据</string>
 
 </resources>

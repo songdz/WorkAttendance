@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sensorID">设备编号：</string>
+    <string name="installLocation">安装位置：</string>
+    <string name="coordinates">坐标：</string>
+    <string name="eastLongitude">东经：</string>
+    <string name="degree">°</string>
+    <string name="minute">′</string>
+    <string name="second">″</string>
+    <string name="northLatitude">北纬：</string>
+    <string name="altitude">海拔(米)：</string>
+    <string name="ipv6_address">IPv6地址：</string>
+    <string name="unit_meter">单位：米</string>
+    <string name="unit_centimeter">单位：厘米</string>
+    <string name="serialNum">序列号：</string>
+    <string name="buriedDepth">掩埋深度(厘米)：</string>
+    <string name="rainGauge">雨量筒</string>
+    <string name="installHeight">安装高度：</string>
+    <string name="infraredSensor">高精度红外温度探测仪</string>
+</resources>

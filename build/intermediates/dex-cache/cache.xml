@@ -2,32 +2,25 @@
 <items version="2" >
 
     <item
-        jar="E:\Workspace\AndroidStudioProjects\WorkAttendance\FieldDataCheck\build\intermediates\exploded-aar\com.google.android.gms\play-services\4.2.42\classes.jar"
+        jar="G:\AndroidStudioWorkspace\WorkAttendance\FieldDataCheck\build\intermediates\exploded-aar\com.google.android.gms\play-services\4.2.42\classes.jar"
         jumboMode="false"
         revision="19.1.0"
         sha1="e5f81129dfb3d02df80126512bc98278ed2bb40a">
-        <dex dex="E:\Workspace\AndroidStudioProjects\WorkAttendance\FieldDataCheck\build\intermediates\pre-dexed\debug\classes-cc30d95dbfb62847ae33d039305eca3d1dcf156a.jar" />
+        <dex dex="G:\AndroidStudioWorkspace\WorkAttendance\FieldDataCheck\build\intermediates\pre-dexed\debug\classes-9291a47441340128de5c5cba758df33cf0a62aa6.jar" />
     </item>
     <item
-        jar="C:\Users\songdz\Android-sdk\sdk\extras\android\m2repository\com\android\support\support-v4\19.1.0\support-v4-19.1.0.jar"
+        jar="G:\AndroidStudioWorkspace\WorkAttendance\FieldDataCheck\build\intermediates\exploded-aar\com.android.support\appcompat-v7\19.1.0\classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="3499ceba05ca1f6037c6a2fad73df8f636224a28">
+        <dex dex="G:\AndroidStudioWorkspace\WorkAttendance\FieldDataCheck\build\intermediates\pre-dexed\debug\classes-64271ea872a0f761de89e39759ea555e5c95df38.jar" />
+    </item>
+    <item
+        jar="D:\Program Files (x86)\Android\Android-sdk\sdk\extras\android\m2repository\com\android\support\support-v4\19.1.0\support-v4-19.1.0.jar"
         jumboMode="false"
         revision="19.1.0"
         sha1="85f201b380937e61a9dce6ca90ccf6872abbfb67">
-        <dex dex="E:\Workspace\AndroidStudioProjects\WorkAttendance\Attendance\build\intermediates\pre-dexed\debug\support-v4-19.1.0-75d4ac0f189c8252e746f5331e0ada1294518cb7.jar" />
-    </item>
-    <item
-        jar="E:\Workspace\AndroidStudioProjects\WorkAttendance\FieldDataCheck\build\intermediates\exploded-aar\com.android.support\appcompat-v7\19.1.0\classes.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="3499ceba05ca1f6037c6a2fad73df8f636224a28">
-        <dex dex="E:\Workspace\AndroidStudioProjects\WorkAttendance\FieldDataCheck\build\intermediates\pre-dexed\debug\classes-e04ec8a47bb20d2eda7ee8ca88fff8e705426c67.jar" />
-    </item>
-    <item
-        jar="E:\Workspace\AndroidStudioProjects\WorkAttendance\Attendance\build\intermediates\exploded-aar\com.android.support\appcompat-v7\19.1.0\classes.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="3499ceba05ca1f6037c6a2fad73df8f636224a28">
-        <dex dex="E:\Workspace\AndroidStudioProjects\WorkAttendance\Attendance\build\intermediates\pre-dexed\debug\classes-194440e4321bc2bc8b4ba37a9888fdc50819c8cb.jar" />
+        <dex dex="G:\AndroidStudioWorkspace\WorkAttendance\FieldDataCheck\build\intermediates\pre-dexed\debug\support-v4-19.1.0-4dd0e1e0eb47e8e8336129a41926bc8385bab48f.jar" />
     </item>
 
 </items>
