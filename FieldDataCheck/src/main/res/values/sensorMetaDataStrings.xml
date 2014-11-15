@@ -17,4 +17,5 @@
     <string name="rainGauge">雨量筒</string>
     <string name="installHeight">安装高度：</string>
     <string name="infraredSensor">高精度红外温度探测仪</string>
+    <string name="updateTime">更新时间：</string>
 </resources>
