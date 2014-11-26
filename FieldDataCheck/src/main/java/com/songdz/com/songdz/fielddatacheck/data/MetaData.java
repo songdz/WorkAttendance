@@ -46,4 +46,9 @@ public class MetaData implements Cloneable {
         }
         return metaData;
     }
+
+    @Override
+    public String toString() {
+        return "ID = " + id + "FileName = " + fileName;
+    }
 }

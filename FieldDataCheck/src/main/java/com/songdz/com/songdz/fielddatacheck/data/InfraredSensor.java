@@ -4,7 +4,7 @@ package com.songdz.com.songdz.fielddatacheck.data;
  * Created by SongDz on 2014/11/17.
  */
 public class InfraredSensor {
-    private int serialNum;
+    private String serialNum;
     private double installHeight;
     private double m_c2;
     private double m_c1;
@@ -17,13 +17,13 @@ public class InfraredSensor {
     private double mSB_c0;
     private double bSB_c2;
     private double bSB_c1;
-    private double bSB_c20;
+    private double bSB_c0;
 
-    public int getSerialNum() {
+    public String getSerialNum() {
         return serialNum;
     }
 
-    public void setSerialNum(int serialNum) {
+    public void setSerialNum(String  serialNum) {
         this.serialNum = serialNum;
     }
 
@@ -123,11 +123,11 @@ public class InfraredSensor {
         this.bSB_c1 = bSB_c1;
     }
 
-    public double getbSB_c20() {
-        return bSB_c20;
+    public double getbSB_c0() {
+        return bSB_c0;
     }
 
-    public void setbSB_c20(double bSB_c20) {
-        this.bSB_c20 = bSB_c20;
+    public void setbSB_c0(double bSB_c0) {
+        this.bSB_c0 = bSB_c0;
     }
 }
