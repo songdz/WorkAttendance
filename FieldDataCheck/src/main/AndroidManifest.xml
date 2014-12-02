@@ -24,20 +24,21 @@
         <activity
             android:name="com.songdz.fielddatacheck.app.ShowLastDataActivity"
             android:label="@string/title_activity_show_last_data" >
+
         </activity>
         <activity
             android:name="com.songdz.fielddatacheck.app.ShowSensorMetaDataActivity"
             android:label="@string/title_activity_show_sensor_meta_data" >
-
-        </activity>
-        <activity
-            android:name="com.songdz.fielddatacheck.app.ShowSensorMetaDataListActivity"
-            android:label="@string/title_activity_show_sensor_meta_data_list" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+     </activity>
+        <activity
+            android:name="com.songdz.fielddatacheck.app.ShowSensorMetaDataListActivity"
+            android:label="@string/title_activity_show_sensor_meta_data_list" >
+
         </activity>
     </application>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />

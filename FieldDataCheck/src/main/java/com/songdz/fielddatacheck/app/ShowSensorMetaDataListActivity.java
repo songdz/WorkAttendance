@@ -52,10 +52,14 @@ public class ShowSensorMetaDataListActivity extends ListActivity {
 
     private MetaDataMap metaDataMap;
 
+    private String metaDatas = "MetaData.xml";
+
+    private File metaDataDir = new File(getFilesDir(), "MetaData");
+
     private boolean  makeFileSystem() throws IOException, SAXException, ParserConfigurationException {
 
-        File metaDataDir = new File(getFilesDir(), "MetaData");
-        final String metaDatas = "MetaData.xml";
+        //File metaDataDir = new File(getFilesDir(), "MetaData");
+       // final String metaDatas = "MetaData.xml";
         if(!metaDataDir.exists()) {
             if(metaDataDir.mkdir()) {
                 Log.i("file", "Create Success!");
@@ -76,11 +80,6 @@ public class ShowSensorMetaDataListActivity extends ListActivity {
             Thread requestMetaDataThread = new Thread(new RequestMetaDataThread(metaDatas));
             requestMetaDataThread.start();
         }
-        metaDataMap = new MetaDataXMLParser().getMetaDataMap(new File(metaDataDir, metaDatas));
-
-System.out.println(metaDataMap.getMetaDataCount());
-System.out.println(metaDataMap.getUpdateTime());
-System.out.println(metaDataMap.toString());
 
         return true;
     }
@@ -160,6 +159,10 @@ System.out.println(metaDataMap.toString());
         ActivitiesContainer.getInstance().addActivity(this);
         try {
             makeFileSystem();
+            metaDataMap = new MetaDataXMLParser().getMetaDataMap(new File(metaDataDir, metaDatas));
+System.out.println(metaDataMap.getMetaDataCount());
+System.out.println(metaDataMap.getUpdateTime());
+System.out.println(metaDataMap.toString());
         } catch (IOException e) {
             e.printStackTrace();
         } catch (SAXException e) {
@@ -203,7 +206,7 @@ System.out.println(metaDatas);
         for (MetaData metaData : metaDatas.values()) {
             map = new HashMap<String, String>();
             map.put(getString(R.string.title_sensor_id), metaData.getId() + "");
-            map.put(getString(R.string.title_update_time), simpleDateFormat.format(new Date(metaData.getDate())));
+            map.put(getString(R.string.title_update_time), simpleDateFormat.format(new Date(metaData.getupdateTime())));
             list.add(map);
         }
         return list;

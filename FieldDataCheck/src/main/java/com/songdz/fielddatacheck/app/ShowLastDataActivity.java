@@ -121,8 +121,7 @@ public class ShowLastDataActivity extends Activity {
     private void getNodeDataInfo() {
         Intent intent = getIntent();
         String result = intent.getStringExtra(Constants.result);
-System.out.println(result);
-
+        if (result == null) return;
         nodeDataInfo = new NodeDataInfo();
         try {
             JSONObject sensorJSON = new JSONObject(result);
@@ -161,6 +160,7 @@ System.out.println(result);
             e.printStackTrace();
             nodeDataInfo = null;
             HAS_DATA = Boolean.FALSE;
+            return;
         }
         HAS_DATA = Boolean.TRUE;
     }

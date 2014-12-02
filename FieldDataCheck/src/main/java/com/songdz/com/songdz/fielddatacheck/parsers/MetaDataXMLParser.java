@@ -84,7 +84,7 @@ public class MetaDataXMLParser extends DefaultHandler {
                     outTag = false;
                     metaDataMap.setUpdateTime(updateTime.getTime());
                 } else {
-                    metaData.setDate(updateTime.getTime());
+                    metaData.setupdateTime(updateTime.getTime());
                 }
             } catch (ParseException e) {
                 e.printStackTrace();
@@ -95,6 +95,14 @@ public class MetaDataXMLParser extends DefaultHandler {
             metaData.setId(Integer.valueOf(sb.toString()));
         } else if("文件名称".equals(qName)) {
             metaData.setFileName(sb.toString());
+        } else if("维护时间".equals(qName)) {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            try {
+                Date checkTime = simpleDateFormat.parse(sb.toString());
+                metaData.setDeviceCheckTime(checkTime.getTime());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         } else if("传感器元数据".equals(qName)) {
 System.out.println("传感器元数据" + metaData);
             metaDataMap.addMetaData(metaData.getId(), metaData);

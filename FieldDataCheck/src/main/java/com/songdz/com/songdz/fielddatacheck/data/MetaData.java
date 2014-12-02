@@ -11,6 +11,16 @@ public class MetaData implements Cloneable {
 
     private long updateTime;
 
+    public long getDeviceCheckTime() {
+        return deviceCheckTime;
+    }
+
+    public void setDeviceCheckTime(long deviceCheckTime) {
+        this.deviceCheckTime = deviceCheckTime;
+    }
+
+    private long deviceCheckTime;
+
     private String fileName;
 
     public String getFileName() {
@@ -29,11 +39,11 @@ public class MetaData implements Cloneable {
         this.id = id;
     }
 
-    public long getDate() {
+    public long getupdateTime() {
         return updateTime;
     }
 
-    public void setDate(long updateTime) {
+    public void setupdateTime(long updateTime) {
         this.updateTime = updateTime;
     }
 
